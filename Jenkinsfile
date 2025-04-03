@@ -45,8 +45,8 @@ pipeline {
 				sh 'docker stop xyz_project || true'
 				sh 'docker rm xyz_project || true'
 				sh 'docker run -itd -p 9092:9091 -p 8082:8080 --name xyz_project ${IMAGE_NAME}:${BUILD_NUMBER}'			
-				}
 			}
+			
 		}
 	
 	
