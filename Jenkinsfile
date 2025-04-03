@@ -42,7 +42,25 @@ pipeline {
 		}
 		stage('deployment') {
 			steps {
-				sh "docker run -itd -p 8080:8080 --name xyz_project_${BUILD_NUMBER} ${IMAGE_NAME}:${BUILD_NUMBER}"
+				script {
+					// Checking the previous container functionality
+					// if it is running, stop and delete the old container
+					// else if it is stopped, just delete it
+					// else at last create a new container on the same port
+					
+					
+					sh """
+					if [ \$(docker ps -q -f name=xyz_project_${BUILD_NUMBER}) ]; then
+						docker stop xyz_project_${BUILD_NUMBER}
+						docker rm xyz_project_${BUILD_NUMBER}
+						
+					elif [ \$(docker ps -aq -f name=xyz_project_${BUILD_NUMBER}) ]; then
+						docker rm xyz_project_${BUILD_NUMBER}
+						
+					fi
+					docker run -itd -p 8082:8080 --name xyz_project_${BUILD_NUMBER} ${IMAGE_NAME}:${BUILD_NUMBER}
+					"""			
+				}
 			}
 		}
 	
