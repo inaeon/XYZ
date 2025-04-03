@@ -2,6 +2,7 @@
 <body>
 <h2>Welcome to XYZ technologies</h2>
   <h3>This is admin Module</h3>
+  <h3>Test Changes to Verify the CI/CD Implementation<h3>
   <button name="Add User" value="Add User" type="button" onclick="addUser()">Add User</button>  
 <script>  
 function addUser(){  
