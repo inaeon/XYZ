@@ -35,7 +35,7 @@ pipeline {
 		}
 		stage('push docker image') {
 			steps {
-				withDockerRegistry([credentialsId: "avdeshsainger", url: ""]) {
+				withDockerRegistry([credentialsId: "hub.docker.com", url: ""]) {
 					sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
 				}
 			}
