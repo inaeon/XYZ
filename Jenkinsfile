@@ -2,7 +2,7 @@
 pipeline {
 	agent any 
 	environment {
-		IMAGE_NAME = "avdeshsainger/xyztechnologies"
+		IMAGE_NAME = "avdeshsainger/xyz-jmx"
 	}
 	
 	
@@ -42,24 +42,9 @@ pipeline {
 		}
 		stage('deployment') {
 			steps {
-				script {
-					// Checking the previous container functionality
-					// if it is running, stop and delete the old container
-					// else if it is stopped, just delete it
-					// else at last create a new container on the same port
-					
-					
-					sh """
-					if [ \$(docker ps -q -f name=xyz_project) ]; then
-						docker stop xyz_project
-						docker rm xyz_project
-						
-					elif [ \$(docker ps -aq -f name=xyz_project) ]; then
-						docker rm xyz_project
-						
-					fi
-					docker run -itd -p 8082:8080 --name xyz_project ${IMAGE_NAME}:${BUILD_NUMBER}
-					"""			
+				sh 'docker stop xyz_project || true'
+				sh 'docker rm xyz_project || true'
+				sh 'docker run -itd -p 9091:9090 -p 8082:8080 --name xyz_project ${IMAGE_NAME}:${BUILD_NUMBER}'			
 				}
 			}
 		}
