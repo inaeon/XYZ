@@ -2,7 +2,7 @@
 pipeline {
 	agent any 
 	environment {
-		IMAGE_NAME = "inaeondocker/xyztechnologies"
+		IMAGE_NAME = "avdeshsainger/xyztechnologies"
 	}
 	
 	
@@ -35,7 +35,7 @@ pipeline {
 		}
 		stage('push docker image') {
 			steps {
-				withDockerRegistry([credentialsId: "docker-id", url: ""]) {
+				withDockerRegistry([credentialsId: "hub.docker.com", url: ""]) {
 					sh "docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
 				}
 			}
